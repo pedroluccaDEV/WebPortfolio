@@ -26,6 +26,7 @@ export default {
     color: inherit;
 }
 .project-item-container {
+    z-index: -1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,7 +70,7 @@ export default {
 }
 .project-item-container:hover {
     transform: translateY(-15px); /* Levanta o item em 5 pixels */
-    z-index: 0;
+    z-index: -1;
 }
 
 @media (min-width: 1050px) and (max-width: 1300px) {

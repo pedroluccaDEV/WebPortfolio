@@ -59,6 +59,7 @@ export default {
         
     }
     .header {
+        z-index: 1000;
         position: fixed;
         top: 0;
         display: flex;
