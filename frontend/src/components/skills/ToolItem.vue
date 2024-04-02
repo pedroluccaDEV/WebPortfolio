@@ -2,7 +2,7 @@
   <div class="tool-item" @mouseover="showDescription = true" @mouseleave="showDescription = false">
     <h3 class="tool-name">{{ tool.name }}</h3>
     <img :src="tool.imageUrl" alt="Tool Image" class="tool-image" :class="{ 'rounded': showDescription }">
-    <div v-if="showDescription" class="tooltip">
+    <div v-if="showDescription" class="tooltip" :class="{ 'tooltip-visible': showDescription }">
       <p class="tool-description">{{ tool.description }}</p>
     </div>
   </div>
@@ -24,6 +24,7 @@ export default {
 </script>
 <style>
 .tool-item {
+    
     margin-right: 2.5vw;
     margin-left: 2.5vw;
     position: relative;
@@ -75,11 +76,13 @@ export default {
 .tool-item.show-description {
   padding-bottom: 20px;
 }
+
 @media (min-width: 0px) and (max-width: 768px) {
     .tool-list {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-gap: 10px;
+        grid-gap: 10px;    
     }
+    
 }
 </style>

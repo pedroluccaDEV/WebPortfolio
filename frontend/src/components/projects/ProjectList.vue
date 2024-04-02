@@ -1,5 +1,5 @@
 <template>
-  <div class="project-list" ref="projectList">
+  <div class="project-list" ref="projectList" id="projects">
     <h1 class="title">Projects</h1>
     <div class="project-items">
       <ProjectItem v-for="project in projects" :key="project.id" :project="project" />

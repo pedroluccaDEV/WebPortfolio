@@ -2,9 +2,9 @@
     <div class="header">
         <img src="../../../public/assets/default.png" alt="Logo" class="logo">
         <div class="links">
-            <router-link to="/about"  ref="about" class="centro">About</router-link>
-            <router-link to="/projects" class="centro">Projects</router-link>
-            <router-link to="/skills" ref="skills" class="centro">Skills</router-link>
+            <router-link :to="{ path: '/about', hash: '#about'}" class="centro">About</router-link>
+            <router-link :to="{ path: '/projects', hash: '#projects'}" class="centro">Projects</router-link>
+            <router-link :to="{ path: '/skills', hash: '#skills' }" class="centro">Skills</router-link>
             <button class="toggle" @click="toggleMenu">
                 <i class="fas fa-bars" 
                     style="color: #fff;
@@ -30,8 +30,25 @@ export default {
     methods: {
         toggleMenu() {
             this.isMenuVisible = !this.isMenuVisible; // Alterna a visibilidade do menu
+        },
+        scrollTo(hash) {
+            const el = document.querySelector(hash);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    },
+    watch: {
+        '$route'() {
+            if (this.$route.meta.scrollToTop) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            if (this.$route.meta.scrollTo) {
+                this.scrollTo(this.$route.meta.scrollTo);
+            }
         }
     }
+        
 }
 </script>
 

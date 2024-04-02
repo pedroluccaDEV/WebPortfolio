@@ -1,5 +1,5 @@
 <template>
-    <div class="about" ref="about">
+    <div class="about" ref="about" id="about">
         <div class="texts">
             <h1 class="title">{{ title }}</h1>
             <h1 class="pedro">{{ text1 }} - {{ text2 }}</h1>

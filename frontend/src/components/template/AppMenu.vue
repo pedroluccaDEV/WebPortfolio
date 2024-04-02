@@ -2,9 +2,9 @@
     <aside class="menu" v-show="isVisible">
         <img src="../../../public/assets/default.png" alt="Logo" class="logo">
             <div class="nav">
-                <router-link to="/about"  ref="about" class="centro">About</router-link>
-                <router-link to="/projects" class="centro">Projects</router-link>
-                <router-link to="/skills" ref="skills" class="centro">Skills</router-link>
+                <router-link :to="{ path: '/about', hash: '#about'}" class="centro">About</router-link>
+            <router-link :to="{ path: '/projects', hash: '#projects'}" class="centro">Projects</router-link>
+            <router-link :to="{ path: '/skills', hash: '#skills' }" class="centro">Skills</router-link>
             </div>
             <button class="hire">Hire Me</button>
             <div class="social">

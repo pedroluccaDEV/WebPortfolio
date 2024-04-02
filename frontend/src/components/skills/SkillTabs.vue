@@ -1,5 +1,5 @@
 <template>
-  <div class="skill-tabs">
+  <div class="skill-tabs" id="skills">
     <div class="tab">
       <button
         v-for="(skill, index) in skills"
