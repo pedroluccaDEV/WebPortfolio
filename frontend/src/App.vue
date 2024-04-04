@@ -10,8 +10,8 @@
 <script>
 import HomeView from './components/views/HomeView.vue'
 import ProjectList from './components/projects/ProjectList.vue'
-import AppFooter from './components/template/AppFooter.vue'
 import SkillTabs from './components/skills/SkillTabs.vue'
+import AppFooter from './components/template/AppFooter.vue'
 
 export default {
     name: 'App',
