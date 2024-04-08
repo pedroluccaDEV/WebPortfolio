@@ -21,6 +21,7 @@ export default {
         SkillTabs,
         AppFooter
     },
+    
 
 }
 </script>

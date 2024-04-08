@@ -8,7 +8,7 @@
                 <button class="cv">Download CV</button>
             </div>
         </div>
-        <div class="foto"></div>
+        <img class="foto" src="../../../public/assets/pedro.jpg" alt="pedro">
     </div>
 </template>
 
