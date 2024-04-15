@@ -1,44 +1,50 @@
+const bcrypt = require('bcrypt-nodejs')
 
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
     
+    const encryptPassword = password => {
+        const salt = bcrypt.genSaltSync(10)
+        return bcrypt.hashSync(password, salt)
+    }
+
     //CREATE AND UPDATE user
     const save = async (req, res) => {
         const user = { ...req.body }
         if(req.params.id){
-            user.id = req.param.id
+            user.id = req.params.id
         }
         if(!req.originalUrl.startsWith('/users')){
             user.admin = false
         }
-        if(!req.user || !req.user.adin){
+        if(!req.user || !req.user.admin){
             user.admin = false
         }
 
         try {
-            existisOrError(user.name, 'Nome não informado !')
+            existsOrError(user.name, 'Nome não informado !')
             existsOrError(user.email, 'Email não informado !')
             existsOrError(user.password, 'Senha não informada !')
             existsOrError(user.confirmPassword, 'Confirme a senha !')
-            equalsOrError(user.confirmPassword, 'As senhas devem ser iguais !')
+            equalsOrError(user.password, user.confirmPassword, 'As senhas devem ser iguais !')
 
             const userFromDB = await app.db('users')
                 .where({ email: user.email }).first()
             if(!user.id){
-                notExistsOrError(userFromDB, 'Usuario já cadastrado !')
+                notExistsOrError(userFromDB, 'Usuário já cadastrado !')
             }
         } catch (msg){
-            return (res.status(400).send(msg))
+            return res.status(400).send(msg)
         }
 
         user.password = encryptPassword(user.password)
         delete user.confirmPassword
 
         if(user.id){
-            app.db ('user')
+            app.db('users')
                 .update(user)
-                where({ id: user.id })
+                .where({ id: user.id })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
@@ -64,9 +70,9 @@ module.exports = app => {
             .select('id', 'name', 'email', 'admin')
             .where({ id: req.params.id })
             .whereNull('deletedAt')
-            first()
+            .first()
             .then(user => res.json(user))
-            .catch(err => res.statuns(500).send(err))
+            .catch(err => res.status(500).send(err))
     }
 
     //DELETE user
