@@ -1,16 +1,16 @@
 <template>
   <div class="tool-item" @mouseover="showDescription = true" @mouseleave="showDescription = false">
-    <h3 class="tool-name">{{ tool.name }}</h3>
-    <img :src="tool.imageUrl" alt="Tool Image" class="tool-image" :class="{ 'rounded': showDescription }">
+    <h3 class="tool-name">{{ skill.name || 'Tool Name' }}</h3>
+    <img :src="skill.image || require('../../../public/assets/default.png')" alt="Tool Image" class="tool-image" :class="{ 'rounded': showDescription }">
     <div v-if="showDescription" class="tooltip" :class="{ 'tooltip-visible': showDescription }">
-      <p class="tool-description">{{ tool.description }}</p>
+      <p class="tool-description">{{ skill.description || 'Tool Description' }}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
   props: {
-    tool: {
+    skill: {
       type: Object,
       required: true
     }
@@ -22,6 +22,7 @@ export default {
   }
 };
 </script>
+
 <style>
 .tool-item {
     

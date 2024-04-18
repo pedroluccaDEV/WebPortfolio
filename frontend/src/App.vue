@@ -3,6 +3,7 @@
         <HomeView />
         <ProjectList ref="projects" />
         <SkillTabs />
+        <AddNew />
         <AppFooter />
     </div>
 </template>
@@ -12,6 +13,7 @@ import HomeView from './components/views/HomeView.vue'
 import ProjectList from './components/projects/ProjectList.vue'
 import SkillTabs from './components/skills/SkillTabs.vue'
 import AppFooter from './components/template/AppFooter.vue'
+import AddNew from './components/template/addNew/AddNew.vue'
 
 export default {
     name: 'App',
@@ -19,7 +21,8 @@ export default {
         HomeView,
         ProjectList,
         SkillTabs,
-        AppFooter
+        AppFooter,
+        AddNew
     },
     
 

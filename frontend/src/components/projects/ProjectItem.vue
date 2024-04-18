@@ -1,11 +1,10 @@
 <template>
     <router-link :to="'/projects/' + project.id" class="project-item-link">
         <div class="project-item-container">
-            <img :src="project.imageUrl || require('../../../public/assets/default.png')" alt="Project Image" class="project-image" />
+            <img :src="project.cover_url ? project.cover_url : require('../../../public/assets/default.png')" alt="Project Image" class="project-image" />
             <div class="project-details">
                 <h2>{{ project.name }}</h2>
                 <p>{{ project.description }}</p>
-                <p class="data">{{ project.date }}</p>
             </div>
         </div>
     </router-link>
@@ -19,7 +18,6 @@ export default {
     }
 }
 </script>
-
 <style scoped>
 .project-item-link {
     text-decoration: none;

@@ -9,30 +9,45 @@
         </p>
         <h2 class="sub">Development Tools</h2>
         <div class="tool-list">
-            <ToolItem v-for="tool in tools" :key="tool.id" :tool="tool" />
+            <ToolItem v-for="skill in skills" :key="skill.id" :skill="skill" />
         </div>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import axios from 'axios'
+import { baseApiUrl } from '@/global'
 import ToolItem from './ToolItem.vue'
 
 export default {
     name: 'FrontendSkills',
     components: { ToolItem },
-    setup() {
-       const tools = ref([
-            { id: 1, name: 'Vue 3', description: 'A progressive JavaScript framework for building user interfaces.', imageUrl: 'https://vuejs.org/images/logo.png' },
-            { id: 2, name: 'React', description: 'A JavaScript library for building user interfaces, developed by Facebook.', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' },
-            { id: 5, name: 'HTML', description: 'The standard markup language for creating web pages and web applications.', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg' },
-            { id: 6, name: 'CSS', description: 'A style sheet language used for describing the presentation of a document written in HTML.', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg' },
-            { id: 7, name: 'JavaScript', description: 'A programming language that enables interactive web pages and is essential for web development.', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg' },
-            { id: 9, name: 'Bootstrap', description: 'A free and open-source CSS framework directed at responsive, mobile-first front-end web development.', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/512px-Bootstrap_logo.svg.png' },
-        ]);
-
-        return { tools }
+    data(){
+        return {
+            skills: [],
+            loading: false
+        }
     },
+    methods: {
+        getSkills(){
+            if(this.loading) return
+
+            this.loading = true
+            const url = `${baseApiUrl}/skills`
+            axios(url)
+                .then(res => {
+                    this.skills = res.data
+                    this.loading = false
+                })
+                .catch(error => {
+                    console.error('Error loading skills:', error)
+                    this.loading = false
+                })
+        }
+    },
+    mounted(){
+        this.getSkills()
+    }
 
 }
 </script>

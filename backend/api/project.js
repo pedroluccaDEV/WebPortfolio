@@ -54,13 +54,14 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('projects')
-            .select('id', 'name', 'description', 'date')
+            .select('id', 'name', 'description','cover_url','date')
             .then(projects => res.json(projects))
             .catch(err => res.status(500).send(err))
     }
 
     const getById = (req, res) => {
         app.db('projects')
+            .select('id', 'name', 'description','cover_url','date')
             .where({ id: req.params.id })
             .first()
             .then(project => {

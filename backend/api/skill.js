@@ -9,9 +9,10 @@ module.exports = app =>  {
         }
 
         try{
-            existsOrError(skill.name, 'A Habilidade deve ter um nome')
-            existsOrError(skill.description, 'Insira a descrição da habilidade')
-            existsOrError(skill.image, 'Escolha uma imagem para a habilidade')
+            existsOrError(skill.name, 'A Habilidade deve ter um nome !')
+            existsOrError(skill.description, 'Insira a descrição da habilidade !')
+            existsOrError(skill.image, 'Escolha uma imagem para a habilidade !')
+            existsOrError(skill.area, 'Escolha qual sobre qual área é a habilidade !')
         } catch(msg){
             return res.status(400).send(msg)
         }
@@ -50,14 +51,14 @@ module.exports = app =>  {
 
     const get = (req, res) => {
         app.db('skills')
-            .select('name', 'description', 'image', 'code')
+            .select('name', 'description', 'image', 'area')
             .then(skills => res.json(skills))
             .catch(err => res.status(500).send(err))
     }
 
     const getById = (req, res) =>{
         app.db('skills')
-            .select('name', 'description', 'image', 'code')
+            .select('name', 'description', 'image', 'area')
             .where({ id: skill.id })
             .first()
             .then(skill => {

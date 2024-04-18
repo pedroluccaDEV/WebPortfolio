@@ -1,5 +1,8 @@
 import { createApp } from 'vue'
+
 import App from './App.vue'
+import './config/axios.js'
+
 import router from './router/index'
 import store from './store/store'
 import { Quasar } from 'quasar';

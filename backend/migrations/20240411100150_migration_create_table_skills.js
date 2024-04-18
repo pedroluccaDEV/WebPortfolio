@@ -5,7 +5,7 @@ exports.up = function(knex) {
       table.string('name').notNullable();
       table.text('description').notNullable();
       table.string('image').notNullable(); // Assuming this is the path to the image
-      table.string('code');
+      table.string('code')
     });
   };
   

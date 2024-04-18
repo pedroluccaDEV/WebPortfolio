@@ -1,3 +1,4 @@
+
 const routes = [
     { 
         path: '/about', 
@@ -22,5 +23,16 @@ const routes = [
         component: () => import("../components/projects/ProjectPage.vue"),
         name: 'ProjectPage'
     },
+    {
+        path:'/projects/new',
+        component: () => import("../components/template/addNew/NewProject.vue"),
+        name: 'NewProject'
+    },
+    {
+        path:'/skills/new',
+        component: () => import("../components/template/addNew/NewSkill.vue"),
+        name: 'NewSkill'
+    }
+    
 ];
 export default routes;
