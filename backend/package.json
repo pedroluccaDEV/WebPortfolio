@@ -7,7 +7,7 @@
     "private": true,
     "main": "index.js",
     "scripts": {
-        "start": "nodemon",
+        "dev": "nodemon",
         "production": "pm2 start index.js --name pedrodev-backend"
     },
     "keywords": [],
