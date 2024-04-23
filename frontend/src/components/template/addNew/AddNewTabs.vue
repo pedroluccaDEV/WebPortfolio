@@ -45,7 +45,7 @@ export default {
   margin-left: 3vw;
   margin-right: 3vw;
   margin-top: 3vh;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .tabs {

@@ -6,8 +6,9 @@
     </button>
 
     <!-- Popup -->
-    <div v-if="isPopupOpen" class="popup">
+    <div v-if="isPopupOpen" class="popup" @click.self="closePopup" :class="{ 'fullscreen': isMobile }">
       <div class="popup-content">
+        <button v-if="isMobile" class="close-button" @click="closePopup"><i class="fas fa-times"></i></button>
         <AddNewTabs></AddNewTabs>
       </div>
     </div>
@@ -24,34 +25,44 @@ export default {
     },
     data() {
         return {
-        isPopupOpen: false,
-        buttonBottom: '5vh' // Inicialmente a 5vh do bottom
+            isPopupOpen: false,
+            buttonBottom: '5vh', // Inicialmente a 5vh do bottom
+            isMobile: window.innerWidth <= 768 // Verifica se é um dispositivo móvel
         };
     },
     methods: {
         openPopup() {
-        this.isPopupOpen = true;
+            this.isPopupOpen = true;
+        },
+        closePopup() {
+            this.isPopupOpen = false;
         },
         handleScroll() {
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const documentHeight = document.documentElement.scrollHeight;
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const documentHeight = document.documentElement.scrollHeight;
 
-        // Verifica se o usuário chegou ao final da página
-        if (scrollPosition === documentHeight) {
-            this.buttonBottom = '15vh'; // Altera a distância para 15vh
-        } else {
-            this.buttonBottom = '5vh'; // Mantém a distância em 5vh
-        }
+            // Verifica se o usuário chegou ao final da página
+            if (scrollPosition === documentHeight) {
+                this.buttonBottom = '15vh'; // Altera a distância para 15vh
+            } else {
+                this.buttonBottom = '5vh'; // Mantém a distância em 5vh
+            }
+        },
+        checkWindowSize() {
+            this.isMobile = window.innerWidth <= 768;
         }
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.checkWindowSize);
     },
     beforeUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.checkWindowSize);
     }
 };
 </script>
+
 <style scoped>
 /* Botão flutuante */
 .floating-button {
@@ -88,6 +99,7 @@ export default {
 }
 
 .popup-content {
+    position: relative;
     z-index: -1;
     display: flex;
     flex-direction: column;
@@ -100,4 +112,34 @@ export default {
     overflow-y: auto; /* Adiciona scroll vertical se necessário */
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
-</style> 
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos para dispositivos móveis */
+@media only screen and (max-width: 768px) {
+    .popup-content {
+        width: 100%; /* Ocupa toda a largura */
+        height: 100%; /* Ocupa toda a altura */
+        border-radius: 0; /* Remove o raio da borda */
+        padding: 0; /* Remove o padding */
+    }
+
+    .close-button {
+        top: 20px;
+        right: 20px;
+    }
+}
+
+</style>
