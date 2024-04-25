@@ -76,9 +76,9 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
-        max-width: 700px;
-        max-height: 200px;
-        aspect-ratio: 700 / 313;
+        max-width: 507px;
+        max-height: 260px;
+        aspect-ratio: 510 / 260;
     }
     .project-image {
         width: 30%;

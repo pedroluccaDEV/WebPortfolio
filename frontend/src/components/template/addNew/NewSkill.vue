@@ -80,7 +80,7 @@ export default {
             this.skill = {
                 id: "",
                 name: "",
-                description: "",
+                description: ""
             };
         },
         save() {

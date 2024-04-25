@@ -34,19 +34,15 @@
                         class="dd"
                         placeholder=""
                         maxlength="2"
-                        v-model="day"
-                        @input="focusNext($event, 'mm')"
+                        v-model="day"              
                     />
-                    <div class="divider"></div>
                     <input
                         type="text"
                         class="mm"
                         placeholder=""
                         maxlength="2"
                         v-model="month"
-                        @input="focusNext($event, 'yy')"
                     />
-                    <div class="divider"></div>
                     <input
                         type="text"
                         class="yy"
@@ -109,6 +105,9 @@ export default {
         },
     },
     methods: {
+        DateInputs() {
+            return `${this.day}.${this.month}.${this.year}`;
+        },
         reset() {
             // Limpe os campos do formulário, incluindo os campos de data
             this.project = {
@@ -123,30 +122,16 @@ export default {
         },
         save() {
             // Atualize a data no objeto project antes de enviar
-            this.project.date = this.combineDateInputs();
+            this.project.date = this.DateInputs();
 
             axios.post(`${baseApiUrl}/projects`, this.project)
                 .then(() => {
-                    // Limpe o formulário após o envio
                     this.reset()
                 })
                 .catch(error => {
                     // Trate o erro adequadamente
                     console.error("Erro ao salvar projeto:", error);
                 })
-        },
-        combineDateInputs() {
-            return `${this.day}.${this.month}.${this.year}`;
-        },
-        focusNext(event, nextField) {
-            const input = event.target
-            if (input.value.length >= 2) {
-                const nextInput = input.nextElementSibling;
-                if (nextInput && nextInput.classList.contains(nextField)) {
-                    nextInput.focus();
-                }
-            }
-
         },
     }
 }
