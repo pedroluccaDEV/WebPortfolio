@@ -27,16 +27,21 @@ import NewProject from './NewProject.vue'
 import NewSkill from './NewSkill.vue'
 
 export default {
-  components: {
-    NewProject,
-    NewSkill
-  },
-  data() {
-    return {
-      activeTab: 0,
-      tabs: ['Add Project', 'Add Skill'],
-    };
-  },
+    components: {
+        NewProject,
+        NewSkill
+    },
+    data() {
+        return {
+            activeTab: 0,
+            tabs: ['Add Project', 'Add Skill'],
+        };
+    },
+    methods:{
+        closePopup() {
+            this.$emit("close-popup"); // Emitir evento para o componente AddNew
+        },
+    }
 };
 </script>
 
@@ -44,8 +49,9 @@ export default {
 .addnew-tabs {
   margin-left: 3vw;
   margin-right: 3vw;
-  margin-top: 3vh;
   margin-bottom: 10px;
+  width: 80%;
+  
 }
 
 .tabs {
@@ -87,5 +93,8 @@ export default {
   height: 3px;
   width: 60%;
   background: #ff9124;
+}
+router-link{
+    text-decoration: none;
 }
 </style>

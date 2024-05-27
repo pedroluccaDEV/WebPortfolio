@@ -1,20 +1,48 @@
 <template>
-    <router-link :to="'/projects/' + project.id" class="project-item-link">
+    <router-link :to="'/projects/' + project.id" class="project-item-link" @click="openPjTab">
         <div class="project-item-container">
             <img :src="project.cover_url ? project.cover_url : require('../../../public/assets/default.png')" alt="Project Image" class="project-image" />
             <div class="project-details">
                 <h2>{{ project.name }}</h2>
+                
                 <p>{{ project.description }}</p>
             </div>
         </div>
     </router-link>
-</template>
 
+    <div v-if="isPjOpen" class="pjTab" @click.self="closePjTab" :class="{ 'fullscreen': isMobile }">
+      <div class="pjTab-content">
+        <button v-if="isMobile" class="close-button" @click="closePjTab"><i class="fas fa-times"></i></button>
+        <ProjectPage></ProjectPage>
+      </div>
+    </div>
+
+</template>
 <script>
+import ProjectPage from './ProjectPage.vue'
+
 export default {
     name: 'ProjectItem',
+    components: { ProjectPage },
+    data() {
+        return {
+            isPjOpen: false,
+            isMobile: window.innerWidth <= 768
+        }
+    },
     props: {
         project: Object
+    },
+    methods: {
+        openPjTab() {
+            this.isPjOpen = true;
+        },
+        closePjTab() {
+            this.isPjOpen = false;
+        },
+        checkWindowSize() {
+            this.isMobile = window.innerWidth <= 768;
+        },
     }
 }
 </script>
@@ -150,6 +178,64 @@ export default {
         pointer-events: none;
     }      
 }
+
+.pjTab {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Garante que o popup fique acima de outros elementos */
+}
+
+.pjTab-content {
+    position: relative;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 18px;
+    background-color: #222222;
+    padding: 30px;
+    width: 80%; /* Define a largura máxima do conteúdo */
+    height: 80vh; /* Define a altura máxima do conteúdo */
+    overflow-y: auto; /* Adiciona scroll vertical se necessário */
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos para dispositivos móveis */
+@media only screen and (max-width: 768px) {
+    .pjTab-content {
+        width: 100%; /* Ocupa toda a largura */
+        height: 100%; /* Ocupa toda a altura */
+        border-radius: 0; /* Remove o raio da borda */
+        padding: 0; /* Remove o padding */
+    }
+
+    .close-button {
+        top: 20px;
+        right: 20px;
+    }
+}
+
 
 
 </style>

@@ -14,31 +14,42 @@
         </p>
         <h2 class="sub">Development Tools</h2>
         <div class="tool-list">
-            <ToolItem v-for="tool in tools" :key="tool.id" :tool="tool" />
+             <ToolItem v-for="skill in skills" :key="skill.id" :skill="skill" />
         </div>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue'
 import ToolItem from './ToolItem.vue'
+import { baseApiUrl } from '@/global'
+import axios from 'axios'
 
 export default {
     name: 'BackendSkills',
     components: { ToolItem },
-    setup() {
-    const tools = ref([
-        { id: 1, name: 'Node.js', description: 'A JavaScript runtime built on Chrome\'s V8 JavaScript engine.', imageUrl: 'https://cdn.iconscout.com/icon/free/png-256/free-node-js-3550841-2970426.png' },
-        { id: 2, name: 'Express', description: 'A fast, unopinionated, minimalist web framework for Node.js.', imageUrl: 'https://www.pngfind.com/pngs/m/136-1363736_express-js-icon-png-transparent-png.png' },
-        { id: 3, name: 'Python', description: 'A programming language that lets you work quickly and integrate systems more effectively.', imageUrl: 'https://cdn.iconscout.com/icon/free/png-256/free-python-3629591-3032289.png' },
-        { id: 4, name: 'MongoDB', description: 'A cross-platform document-oriented database program.', imageUrl: 'https://images.crunchbase.com/image/upload/c_pad,h_256,w_256,f_auto,q_auto:eco,dpr_1/erkxwhl1gd48xfhe2yld' },
-        { id: 5, name: 'PostgreSQL', description: 'An open-source relational database management system.', imageUrl: 'https://golden-team.org/static/services/postgresql.webp' },
-        { id: 6, name: 'Rest API', description: 'A set of rules that allow programs to communicate with each other over the internet.', imageUrl: 'https://affilae.com/wp-content/uploads/2022/09/icons8-rest-api.svg' },
-    ]);
-
-    return { tools };
+    data(){
+        return {
+            skills: [],
+            loading: false
+        }
     },
+    methods: {
+        getSkills(){
+            if(this.loading) return
 
+            this.loading = true
+            const url = `${baseApiUrl}/skills`
+            axios(url)
+                .then(res => {
+                    this.skills = res.data
+                    this.loading = false
+                })
+                .catch(error => {
+                    console.error('Error loading skills:', error)
+                    this.loading = false
+                })
+        }
+    }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent="save" class="form-column">
+        <form class="form-column">
             <div class="input-wrapper">
                 <input
                     class="input__field"
@@ -19,34 +19,34 @@
                     id="project-description"
                     v-model="project.description"
                     required
-                    placeholder=""
                     style="height: 15vh;"
                     maxlength="220"
+                    placeholder=""
                 ></textarea>
                 <label class="input__label" for="project-description">Descrição do Projeto</label>
                 <span class="char-counter">{{ characterCount }} / 220 </span>
             </div>
-             <div class="date">
+            <div class="date">
                 <span class="date__label">Data de finalização</span>
                 <div class="date__fields">
                     <input
                         type="text"
                         class="dd"
-                        placeholder=""
+                        placeholder="DD"
                         maxlength="2"
-                        v-model="day"              
+                        v-model="day"
                     />
                     <input
                         type="text"
                         class="mm"
-                        placeholder=""
+                        placeholder="MM"
                         maxlength="2"
                         v-model="month"
                     />
                     <input
                         type="text"
                         class="yy"
-                        placeholder=""
+                        placeholder="YY"
                         maxlength="2"
                         v-model="year"
                     />
@@ -62,84 +62,119 @@
                     required
                     placeholder=""
                 />
-                <label class="input__label" for="project-name">Link da Imagem de Capa</label>
+                <label class="input__label" for="project-coverUrl">Link da Imagem de Capa</label>
             </div>
-            <div class="buttons">  
-                <button 
+            <div class="buttons">
+                <button
                     class="save"
                     type="submit"
-                    @click="save">Submit
+                    @click="save"
+                >
+                    Submit
                 </button>
-                <button 
+                <button
                     class="cancel"
-                    type="button" 
-                    @click="reset">Cancel
+                    type="button"
+                    @click="reset"
+                >
+                    Cancel
                 </button>
+            </div>
+            <div class="validations"
+                 v-if="!validation" >
+                <p 
+                    class="msg" placeholder="">
+                        Os campos ( Nome de Projeto, Descrição do Projeto e Data de Finalização ) são Obrigatórios
+                    </p>
             </div>
         </form>
     </div>
 </template>
 
 <script>
-import { baseApiUrl } from "@/global"
-import axios from "axios"
+import axios from "axios";
+import { baseApiUrl } from "@/global";
+import { reloadPage } from "../../../util/utils.js"
 
 export default {
     name: "NewProject",
     data() {
         return {
             project: {
-                id: "",
                 name: "",
                 description: "",
-                date: "",
+                cover_url: "",
+                date: ""
             },
             day: "",
             month: "",
             year: "",
-        }
+            validation: true
+        };
     },
     computed: {
         characterCount() {
-            return this.project.description.length
-        },
+            return this.project.description.length;
+        }
     },
     methods: {
+        closePopup() {
+            this.$emit("close-popup");
+        },
         DateInputs() {
-            return `${this.day}.${this.month}.${this.year}`;
+            if (this.day && this.month && this.year) {
+                return `${this.year}-${this.month}-${this.day}`;
+            } else {
+                return "";
+            }
         },
         reset() {
-            // Limpe os campos do formulário, incluindo os campos de data
-            this.project = {
-                id: "",
-                name: "",
-                description: "",
-                date: "",
-            };
+            this.project.name = "";
+            this.project.description = "";
+            this.project.cover_url = "";
+            this.project.date = "";
             this.day = "";
             this.month = "";
             this.year = "";
+            this.closePopup()
         },
         save() {
-            // Atualize a data no objeto project antes de enviar
             this.project.date = this.DateInputs();
+            if (
+                this.project.name &&
+                this.project.description &&
+                this.project.date 
+            ) {
+                const url = `${baseApiUrl}/projects/new`;
+                console.log("URL:", url);
+                console.log("Dados do Projeto:", this.project);
 
-            axios.post(`${baseApiUrl}/projects`, this.project)
-                .then(() => {
-                    this.reset()
-                })
-                .catch(error => {
-                    // Trate o erro adequadamente
-                    console.error("Erro ao salvar projeto:", error);
-                })
-        },
+                axios
+                    .post(url, this.project)
+                    .then(() => {
+                        console.log("Projeto criado");
+                        this.reset();
+                        reloadPage();
+                    })
+                    .catch(error => {
+                        console.error("Erro ao salvar projeto:", error);
+                    });
+            } else {
+                this.validation = false
+                console.error("Por favor, preencha os campos obrigatórios.");
+
+            }
+        }
     }
-}
+};
 </script>
 
 <style scoped>
 .form-column {
-    margin-top: 5vh;
+    margin-top: 3vh;
+    width: 100%;
+    height: 100%;
+
 }
 .form-column .input-wrapper input,
 .form-column .input-wrapper textarea{
@@ -264,23 +299,29 @@ export default {
 }
 
 .buttons {
-    margin-top: 3vh;
+    margin-top: 5vh;
+    width: 100%;
+    
 }
 
 .buttons button{
-    width: 48%;
-    height: 3.5vh;
+    width: 30%;
+    height: 4.5vh;
 
-    border-radius: 10px;
+    border-radius: 18px;
     border: none;
-
-    margin-right: 5px;
+    
+    margin-right: 10px;
     margin-left: 5px;
 
     color: #fff;
     cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    
 }
 .save{
+   
     background: linear-gradient(90deg, rgba(0,145,92,1) 0%, rgba(52,255,150,1) 100%);
 
 }
@@ -295,5 +336,25 @@ export default {
 .cancel:hover{
     box-shadow: rgba(204, 37, 0, 0.582) 0px 5px 15px;
     
+}
+
+.validations{
+    margin-top: 3vh;
+    width: 100%;
+    height: 7vh;
+    background: rgba(255, 129, 104, 0.637);
+    border-radius: 10px;
+    border: solid 2px #931f2198;
+    overflow: hidden;
+    padding: 3px;
+    cursor: default;
+}
+
+.msg{
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <aside class="menu" v-show="isVisible">
-    <img src="../../../public/assets/default.png" alt="Logo" class="logo">
+    <img src="../../../public/assets/logo.png" alt="Logo" class="logo">
     <div class="nav">
         <router-link :to="{ path: '/about', hash: '#about'}" class="centro">
             <i class="fa fa-info-circle" style="color: white; margin-right: 20px; font-size:16px;"></i>
@@ -59,13 +59,15 @@ export default {
 }
 
 .logo {
-  justify-content: center;
-  width: 150px;
-  height: auto;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    height: auto;
+    margin: auto;
 }
 
 .nav {
+    margin-top: 10vh;
   display: flex;
   flex-direction: column;
   gap: 25px;

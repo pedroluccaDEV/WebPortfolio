@@ -11,9 +11,12 @@ module.exports  = app => {
         .get(app.api.user.getById)
         .delete(app.api.user.remove)
 
+
     app.route('/projects')
-        .post(app.api.project.save)
         .get(app.api.project.get)
+
+    app.route('/projects/new')
+        .post(app.api.project.save)
 
     app.route('/projects/:id')
         .put(app.api.project.save)

@@ -16,10 +16,7 @@ module.exports = app => {
         } catch (msg) {
             return res.status(400).send(msg)
         }
-
-        // Remove confirmPassword field if present (for security reasons)
-        delete project.confirmPassword
-
+        
         if (project.id) {
             app.db('projects')
                 .update(project)

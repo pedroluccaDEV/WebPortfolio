@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <img src="../../../public/assets/default.png" alt="Logo" class="logo">
+    <img src="../../../public/assets/logo.png" alt="Logo" class="logo">
     <div class="links">
       <router-link :to="{ path: '/about', hash: '#about'}" class="centro">About</router-link>
       <router-link :to="{ path: '/projects', hash: '#projects'}" class="centro">Projects</router-link>
@@ -122,7 +122,7 @@ a.centro:hover:after {
 .logo {
   margin-right: auto;
   margin-left: 10vw;
-  height: 14vh;
+  height: 10vh;
   width: auto;
 }
 

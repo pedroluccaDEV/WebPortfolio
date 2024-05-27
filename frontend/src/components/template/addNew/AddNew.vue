@@ -60,11 +60,9 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
         window.removeEventListener('resize', this.checkWindowSize);
     }
-};
+}
 </script>
-
 <style scoped>
-/* Botão flutuante */
 .floating-button {
     position: fixed;
     right: 40px;
@@ -83,8 +81,6 @@ export default {
     z-index: 999; /* Garante que o botão fique acima de outros elementos */
     transition: bottom 0.3s ease; /* Transição suave */
 }
-
-/* Popup */
 .popup {
     position: fixed;
     top: 0;
@@ -107,9 +103,9 @@ export default {
     border-radius: 18px;
     background-color: #222222;
     padding: 30px;
-    width: 40%; /* Define a largura máxima do conteúdo */
-    height: 80vh; /* Define a altura máxima do conteúdo */
-    overflow-y: auto; /* Adiciona scroll vertical se necessário */
+    width: 40%; 
+    height: 80vh;
+    overflow-y: auto; 
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
@@ -125,6 +121,7 @@ export default {
     padding: 0;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 /* Estilos para dispositivos móveis */
